@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="../static/mystyle.css">
+    <script type="text/javascript" src="../static/myjs.js"></script>
+</head>
+
+<body>
+    <!--<h1 class="center">Welcome to advertisement site!</h1>-->
+
+    <div>
+        {% if "username" in session %}
+            <p>
+                <a href="/index">Home Page</a> |
+                <a href="/user_advertisements">My Advertisements</a> |
+                <a href="/profile">My Profile</a> |
+                <a href="/logout">Logout</a>
+            </p>
+        {% else %}
+            <p>
+                <a href="/index">Home Page</a> |
+                <a href="/register">Register</a>
+            </p>
+        {% endif %}
+    </div>
+    <br/>
+
+    <section>
+        <header>{% block header %}{% endblock %}</header>
+        {% block content %}{% endblock %}
+    </section>
+
+</body>
+</html>

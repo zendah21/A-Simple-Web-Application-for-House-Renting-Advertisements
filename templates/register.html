@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Register Page{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    <!---<form name="registrationform" action="/register_user" method="POST">-->
+    <form name="registrationform" onsubmit="return validate_form('registrationform');" method="POST" action="/register_user">
+        <p>Username: <input type="text" name="username" required placeholder="..." onkeyup="validate_username('registrationform')"/>
+            <span class="error" id="username_error"></span></p>
+        <p>Password: <input type="password" name="password" required placeholder="****" onkeyup="validate_password('registrationform')"/>
+            <span class="error hidden" id="password_error"></span></p>
+        <p>Full Name: <input type="text" name="fullname" required placeholder="John Doe" onkeyup="validate_fullname('registrationform')"/>
+            <span class="error hidden" id="fullname_error"></span></p>
+        <p>Email: <input type="text" name="email" required placeholder="someone@organization.domain" onkeyup="validate_email('registrationform')"/>
+            <span class="error hidden" id="email_error"></span></p>
+        <p>Telephone: <input type="text" name="telephone" required placeholder="+90 555 555 5555" onkeyup="validate_telephone('registrationform')"/>
+            <span class="error hidden" id="telephone_error"></span></p>
+        <p><input type="submit" value="Register"/></p>
+    </form>
+
+    <p class="error hidden" id="form_errors"></p>
+    {% if msg %}
+        <p class="error"> {{ msg }}</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="center">{% block title %}Advertisement Information{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if error %}
+        <p class="error">Invalid/Inactive Advertisement.</p>
+        <p>Please go back to <a href="/index">Homepage</a> to search again.</p>
+    {% else %}
+        <div>
+            <table>
+                <tr>
+                    <th class="bold">Title</th>
+                    <td>{{ data[0] }}</td>
+                </tr>
+                <tr>
+                    <th class="bold">Description</th>
+                    <td>{{ data[1] }}</td>
+                </tr>
+                <tr>
+                    <th class="bold">Category</th>
+                    <td>{{ data[2] }}</td>
+                </tr>
+                <tr>
+                    <th class="bold">Contact Full Name</th>
+                    <td>{{ data[3] }}</td>
+                </tr>
+                <tr>
+                    <th class="bold">Contact Email</th>
+                    <td>{{ data[4] }}</td>
+                </tr>
+                <tr>
+                    <th class="bold">Contact Telephone Number</th>
+                    <td>{{ data[5] }}</td>
+                </tr>
+
+            </table>
+        </div>
+
+    {% endif %}
+{% endblock %}

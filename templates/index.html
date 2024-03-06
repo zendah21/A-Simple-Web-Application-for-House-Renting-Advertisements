@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="center">{% block title %}Home Page{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if session['username'] %}
+        <div class="center">
+            <p class="big">Welcome {{ session['username'] }}!</p>
+        </div>
+    {% else %}
+        <div>
+            <p class="big">Login</p>
+            <form action="/login_user" method = "POST">
+                <p>Username: <input type="text" name="username" required/></p>
+                <p>Password: <input type="password" name="password" required/></p>
+                <p><input type="submit" value="Login">
+            </form>
+
+            {% if login_error %}
+            <p class="error"> Username or Password is incorrect </p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="center">
+        <p>Search for advertisements here!</p>
+        <form action="/search" method="post">
+            <p>Search: <input type="text" name="search" placeholder="..."></p>
+            <p>Category:
+                    <!---<input list="categories" name="category" required>-->
+                    <select name="category" required>
+                        <option value="all">All</option>
+                        {% for category in categories %}
+                            <option value="{{ category[0] }}">{{ category[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+            <p><input type="submit" value="Search"></p>
+        </form>
+    </div>
+
+    {% if search_categories %}
+        {% for category in search_categories.keys() %}
+            {% if category in to_display %}
+                <div class="center">
+                    <p class="big">{{ category }}</p>
+                    {% if search_categories[category]|length==0 %}
+                        <p class="error">No results found!</p>
+                    {% else %}
+                        <table class="center">
+                            <tr class="bold">
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Contact Full Name</th>
+                                <th></th>
+                            </tr>
+                            {% for category_result in search_categories[category] %}
+                                <tr>
+                                    <td>{{ category_result[1] }}</td>
+                                    <td>{{ category_result[2] }}</td>
+                                    <td>{{ category_result[3] }}</td>
+                                    <td><a href="/view_advertisement?aid={{ category_result[0] }}">See More</a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+
+
+
+{% endblock %}

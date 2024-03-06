@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="center">{% block title %}My Profile{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if user %}
+        <form name="profileform" onsubmit="return validate_form('profileform');" method="POST" action="/edit_profile">
+            <p>Username: <input type="text" name="username" required placeholder="..." value="{{ user[0] }}" onkeyup="validate_username('profileform')"/>
+                <span class="error" id="username_error"></span></p>
+            <p>Password: <input type="password" name="password" required placeholder="****" value="{{ user[1] }}" onkeyup="validate_password('profileform')"/>
+                <span class="error hidden" id="password_error"></span></p>
+            <p>Full Name: <input type="text" name="fullname" required placeholder="John Doe" value="{{ user[2] }}" onkeyup="validate_fullname('profileform')"/>
+                <span class="error hidden" id="fullname_error"></span></p>
+            <p>Email: <input type="text" name="email" required placeholder="someone@organization.domain" value="{{ user[3] }}" onkeyup="validate_email('profileform')"/>
+                <span class="error hidden" id="email_error"></span></p>
+            <p>Telephone: <input type="text" name="telephone" required placeholder="+90 555 555 5555" value="{{ user[4] }}" onkeyup="validate_telephone('profileform')"/>
+                <span class="error hidden" id="telephone_error"></span></p>
+            <p><input type="submit" value="Edit"/></p>
+        </form>
+        <p class="error hidden" id="form_errors"></p>
+    {% else %}
+        <p class="error">User is not logged in.</p>
+        <p>Please go back to <a href="/index">Homepage</a> to login first, or register <a href="/register">here</a></p>
+    {% endif %}
+
+    {% if msg %}
+        <p>{{ msg }}</p>
+    {% endif %}
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+{% endblock %}

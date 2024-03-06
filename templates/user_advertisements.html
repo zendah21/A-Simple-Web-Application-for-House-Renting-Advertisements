@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 class="center">{% block title %}My Advertisements{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if session['username'] %}
+        <div>
+            <p class="big">Add New</p>
+            <form name="adv_form" action="/add_advertisement" method = "POST">
+                <p>Title: <input type="text" name="title" required/></p>
+                <p>Description: <input type="text" name="description" required/></p>
+                <p>Category:
+                    <!---<input list="categories" name="category" required>-->
+                    <select name="category" required>
+
+                        {% for category in categories %}
+                            <option value="{{ category[0] }}">{{ category[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p><input type="submit" value="Add">
+            </form>
+        </div>
+
+        <div class="center">
+            <table class="center">
+                <tr class="bold">
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Activate/Deactivate</th>
+                </tr>
+                {% if advertisements %}
+                    {% for advertisement in advertisements %}
+                        <tr>
+                            <td>{{ advertisement[1] }}</td>
+                            <td>{{ advertisement[2] }}</td>
+                            <td>{{ advertisement[5] }}</td>
+                            <td>
+                                {% if advertisement[3] %}
+                                    <p><a href="javascript:submitForm('deactivate_adv')">Deactivate</a></p>
+                                    <form name="deactivate_adv" action="/deactivate_advertisement" method="POST">
+                                        <input type="hidden" name="aid" value="{{ advertisement[0] }}">
+                                        <!--<input type="submit" value="Deactivate">-->
+                                    </form>
+                                {% else %}
+                                    <p><a href="javascript:submitForm('activate_adv')">Activate</a></p>
+                                    <form name="activate_adv" action="/activate_advertisement" method="POST">
+                                        <input type="hidden" name="aid" value="{{ advertisement[0] }}">
+                                        <!--<input type="submit" value="Activate">-->
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+
+            </table>
+        </div>
+    {% else %}
+        <p class="error">User is not logged in.</p>
+        <p>Please go back to <a href="/index">Homepage</a> to login first, or register <a href="/register">here</a></p>
+
+    {% endif %}
+{% endblock %}

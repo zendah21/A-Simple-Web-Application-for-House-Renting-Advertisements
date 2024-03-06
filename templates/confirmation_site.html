@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Registered{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+    {% if username %}
+        <p>Your account has been successfully created.</p>
+        <p>Please <a href="/index">click here</a> to go back to homepage.</p>
+    {% else %}
+        <p class="error">Sorry, there was an error creating your account.</p>
+        <p>Please <a href="/register">click here</a> to try again.</p>
+    {% endif %}
+
+{% endblock %}
